@@ -11,7 +11,6 @@ if (!fs.existsSync(postsDir)) fs.mkdirSync(postsDir);
 
 // Read all markdown files
 const mdFiles = fs.readdirSync(mdDir).filter((f) => f.endsWith(".md"));
-
 const listItems: string[] = [];
 
 mdFiles.forEach((file) => {
@@ -19,7 +18,6 @@ mdFiles.forEach((file) => {
   const mdContent = fs.readFileSync(mdPath, "utf-8");
   const htmlContent = marked(mdContent);
 
-  // Generate individual post HTML
   const htmlTemplate = `
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +37,6 @@ mdFiles.forEach((file) => {
   fs.writeFileSync(outPath, htmlTemplate);
   console.log(`Generated: ${outPath}`);
 
-  // Prepare <li> entry for index.html
   listItems.push(`
 <li class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition transform hover:-translate-y-1">
   <a href="posts/${outFile}" class="text-lg font-semibold text-gray-800 hover:text-orange-500 transition">
@@ -49,12 +46,17 @@ mdFiles.forEach((file) => {
 `);
 });
 
-// Update index.html
+// Read index.html
 let indexContent = fs.readFileSync(indexPath, "utf-8");
+
+// Replace placeholder robustly
+const placeholderRegex =
+  /<!--\s*BLOG_POSTS_START\s*-->[\s\S]*<!--\s*BLOG_POSTS_END\s*-->/;
 indexContent = indexContent.replace(
-  /<!-- BLOG_POSTS_START -->[\s\S]*<!-- BLOG_POSTS_END -->/,
+  placeholderRegex,
   `<!-- BLOG_POSTS_START -->\n${listItems.join("\n")}\n<!-- BLOG_POSTS_END -->`,
 );
 
+// Write back
 fs.writeFileSync(indexPath, indexContent, "utf-8");
 console.log(`Updated index.html with ${listItems.length} posts.`);
