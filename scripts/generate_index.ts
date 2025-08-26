@@ -1,26 +1,35 @@
 import * as fs from "fs";
 import * as path from "path";
+import { marked } from "marked";
 
 const postsDir = path.join(__dirname, "../posts");
-const indexPath = path.join(__dirname, "../index.html");
+const mdDir = path.join(__dirname, "../md_posts"); // Markdown files
 
-const files = fs.readdirSync(postsDir)
-    .filter((file: string) => file.endsWith(".html"));
+// Ensure posts directory exists
+if (!fs.existsSync(postsDir)) fs.mkdirSync(postsDir);
 
-const listItems = files.map((file: string) => {
-    const filePath = path.join(postsDir, file);
-    const content = fs.readFileSync(filePath, "utf-8");
-    const titleMatch = content.match(/<h2>(.*?)<\/h2>/i);
-    const title = titleMatch ? titleMatch[1] : file;
-    return `                <li><a href="posts/${file}">${title}</a></li>`;
-}).join("\n");
+const mdFiles = fs.readdirSync(mdDir).filter((f) => f.endsWith(".md"));
 
-let indexContent = fs.readFileSync(indexPath, "utf-8");
+mdFiles.forEach((file) => {
+  const mdPath = path.join(mdDir, file);
+  const mdContent = fs.readFileSync(mdPath, "utf-8");
+  const htmlContent = marked(mdContent);
 
-indexContent = indexContent.replace(
-    /<!-- BLOG_POSTS_START -->[\s\S]*<!-- BLOG_POSTS_END -->/,
-    `<!-- BLOG_POSTS_START -->\n${listItems}\n                <!-- BLOG_POSTS_END -->`
-);
+  const htmlTemplate = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${file.replace(".md", "")}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 p-6">
+  <article class="prose lg:prose-xl max-w-3xl mx-auto">${htmlContent}</article>
+</body>
+</html>`;
 
-fs.writeFileSync(indexPath, indexContent, "utf-8");
-console.log(`✅ index.html updated with ${files.length} posts.`);
+  const outPath = path.join(postsDir, file.replace(".md", ".html"));
+  fs.writeFileSync(outPath, htmlTemplate);
+  console.log(`✅ Generated: ${outPath}`);
+});
