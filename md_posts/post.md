@@ -10,8 +10,11 @@ My name is **Kushal Meghani**, and I’m a passionate Rust developer and open-so
 One of my main projects is the **Rusty-Suite**, a collection of Rust-based tools including:
 
 - **RustyTodos**: A CLI/TUI/GUI todo app built entirely in Rust.
+
 - **RustyBoot**: A lightweight bootloader that works with ext partitions.
+
 - **ls-rs**: A Rust clone of the classic `ls` command.
+
 - **Rusty-Checker**: A tool to stress-test memory for RowHammer vulnerabilities.
 
 You can check out the Rusty-Suite and all the projects here: [rusty-suite.tech](https://rusty-suite.tech)
