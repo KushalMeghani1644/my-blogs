@@ -31,5 +31,5 @@ mdFiles.forEach((file) => {
 
   const outPath = path.join(postsDir, file.replace(".md", ".html"));
   fs.writeFileSync(outPath, htmlTemplate);
-  console.log(`✅ Generated: ${outPath}`);
+  console.log(`Generated: ${outPath}`);
 });

@@ -1,59 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kushal’s Blog</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 text-gray-800">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kushal’s Blog</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-50 text-gray-800">
+        <!-- Header -->
+        <header class="bg-white shadow-md">
+            <div
+                class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center"
+            >
+                <h1 class="text-3xl font-bold text-orange-500 mb-4 md:mb-0">
+                    Kushal’s Blog
+                </h1>
+                <nav class="space-x-4">
+                    <a
+                        href="index.html"
+                        class="text-gray-600 hover:text-orange-500 font-semibold transition"
+                        >Home</a
+                    >
+                    <a
+                        href="#"
+                        class="text-gray-600 hover:text-orange-500 font-semibold transition"
+                        >About</a
+                    >
+                </nav>
+            </div>
+        </header>
 
-  <!-- Header -->
-  <header class="bg-white shadow-md">
-    <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center">
-      <h1 class="text-3xl font-bold text-orange-500 mb-4 md:mb-0">Kushal’s Blog</h1>
-      <nav class="space-x-4">
-        <a href="index.html" class="text-gray-600 hover:text-orange-500 font-semibold transition">Home</a>
-        <a href="#" class="text-gray-600 hover:text-orange-500 font-semibold transition">About</a>
-      </nav>
-    </div>
-  </header>
+        <!-- Main Content -->
+        <main class="max-w-5xl mx-auto px-6 py-10">
+            <section class="mb-10">
+                <h2
+                    class="text-2xl md:text-3xl font-bold mb-6 text-center text-gray-700"
+                >
+                    Recent Posts
+                </h2>
+                <ul id="posts-list" class="space-y-6">
+                    <!-- Blog posts will appear here automatically -->
+                </ul>
+            </section>
+        </main>
 
-  <!-- Main Content -->
-  <main class="max-w-5xl mx-auto px-6 py-10">
-    <section class="mb-10">
-      <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center text-gray-700">Recent Posts</h2>
-      <ul id="posts-list" class="space-y-6">
-        <!-- Blog posts will appear here automatically -->
-      </ul>
-    </section>
-  </main>
+        <!-- Footer -->
+        <footer class="bg-white border-t mt-20 py-6 text-center text-gray-500">
+            &copy; 2025 Kushal Meghani. Built with ❤️ in Rust & Tailwind CSS.
+        </footer>
 
-  <!-- Footer -->
-  <footer class="bg-white border-t mt-20 py-6 text-center text-gray-500">
-    &copy; 2025 Kushal Meghani. Built with ❤️ in Rust & Tailwind CSS.
-  </footer>
+        <!-- JavaScript to auto-list posts -->
+        <script>
+            const posts = [
+                { title: "Example Post", link: "posts/example.html" },
+                { title: "My First Blog", link: "posts/my-first-post.html" },
+            ];
 
-  <!-- JavaScript to auto-list posts -->
-  <script>
-    const posts = [
-      { title: "Example Post", link: "posts/example.html" },
-      { title: "My First Blog", link: "posts/my-first-post.html" }
-    ];
-
-    const listEl = document.getElementById('posts-list');
-    posts.forEach(post => {
-      const li = document.createElement('li');
-      li.className = "bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition transform hover:-translate-y-1";
-      const a = document.createElement('a');
-      a.href = post.link;
-      a.textContent = post.title;
-      a.className = "text-lg font-semibold text-gray-800 hover:text-orange-500 transition";
-      li.appendChild(a);
-      listEl.appendChild(li);
-    });
-  </script>
-
-</body>
+            const listEl = document.getElementById("posts-list");
+            posts.forEach((post) => {
+                const li = document.createElement("li");
+                li.className =
+                    "bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition transform hover:-translate-y-1";
+                const a = document.createElement("a");
+                a.href = post.link;
+                a.textContent = post.title;
+                a.className =
+                    "text-lg font-semibold text-gray-800 hover:text-orange-500 transition";
+                li.appendChild(a);
+                listEl.appendChild(li);
+            });
+        </script>
+    </body>
 </html>
-
